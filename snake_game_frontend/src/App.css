@@ -1,104 +1,415 @@
-/* CSS Variables for Theme Management */
+/* Retro Snake theme (Playful Citrus accents) */
 :root {
-  /* Light theme colors */
-  --bg-primary: #ffffff;
-  --bg-secondary: #f8f9fa;
-  --text-primary: #282c34;
-  --text-secondary: #61dafb;
-  --border-color: #e9ecef;
-  --button-bg: #007bff;
-  --button-text: #ffffff;
+  --bg: #070a0f;
+  --surface: rgba(255, 255, 255, 0.04);
+  --surface-2: rgba(255, 255, 255, 0.06);
+  --border: rgba(255, 255, 255, 0.12);
+
+  --text: rgba(255, 255, 255, 0.92);
+  --muted: rgba(255, 255, 255, 0.68);
+
+  --primary: #f97316; /* citrus orange */
+  --secondary: #22c55e; /* citrus green */
+  --danger: #ef4444;
+
+  --shadow: 0 18px 50px rgba(0, 0, 0, 0.45);
+
+  --cell-gap: 2px;
+  --cell-size: 18px;
 }
 
-[data-theme="dark"] {
-  /* Dark theme colors */
-  --bg-primary: #1a1a1a;
-  --bg-secondary: #282c34;
-  --text-primary: #ffffff;
-  --text-secondary: #61dafb;
-  --border-color: #404040;
-  --button-bg: #0056b3;
-  --button-text: #ffffff;
+* {
+  box-sizing: border-box;
 }
 
 .App {
-  text-align: center;
-  background-color: var(--bg-primary);
-  color: var(--text-primary);
   min-height: 100vh;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  color: var(--text);
+  background:
+    radial-gradient(1200px 600px at 20% 10%, rgba(249, 115, 22, 0.18), transparent 60%),
+    radial-gradient(900px 500px at 80% 20%, rgba(34, 197, 94, 0.16), transparent 60%),
+    radial-gradient(700px 520px at 50% 85%, rgba(96, 165, 250, 0.08), transparent 55%),
+    linear-gradient(180deg, #04060a 0%, #070a0f 55%, #05070c 100%);
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.shell {
+  width: min(1100px, 100%);
+  margin: 0 auto;
+  padding: 20px 16px 28px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.topbar {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+  padding: 14px;
+  border: 1px solid var(--border);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.02));
+  border-radius: 14px;
+  box-shadow: var(--shadow);
 }
 
-.App-header {
-  background-color: var(--bg-secondary);
-  min-height: 100vh;
+.brand {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: var(--text-primary);
-  transition: background-color 0.3s ease;
-  position: relative;
+  align-items: baseline;
+  gap: 10px;
 }
 
-.App-link {
-  color: var(--text-secondary);
-  transition: color 0.3s ease;
+.brandMark {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New",
+    monospace;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  color: rgba(255, 255, 255, 0.95);
+  text-transform: uppercase;
 }
 
-.theme-toggle {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  background-color: var(--button-bg);
-  color: var(--button-text);
-  border: none;
-  border-radius: 8px;
-  padding: 10px 20px;
-  font-size: 14px;
-  font-weight: 600;
+.brandSub {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.stat {
+  border: 1px solid var(--border);
+  background: var(--surface);
+  border-radius: 12px;
+  padding: 10px 12px;
+}
+
+.statLabel {
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.statValue {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New",
+    monospace;
+  font-weight: 800;
+  font-size: 18px;
+  margin-top: 2px;
+}
+
+.actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.btn {
+  appearance: none;
+  border: 1px solid rgba(249, 115, 22, 0.45);
+  background: linear-gradient(180deg, rgba(249, 115, 22, 0.95), rgba(249, 115, 22, 0.82));
+  color: #111827;
+  font-weight: 800;
+  padding: 10px 14px;
+  border-radius: 12px;
   cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 120ms ease, filter 120ms ease, box-shadow 120ms ease;
+  box-shadow: 0 10px 24px rgba(249, 115, 22, 0.22);
 }
 
-.theme-toggle:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-  opacity: 0.9;
+.btn:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.02);
 }
 
-.theme-toggle:active {
-  transform: translateY(0);
+.btn:active {
+  transform: translateY(0px);
+  filter: brightness(0.98);
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+.btn:focus-visible {
+  outline: 3px solid rgba(34, 197, 94, 0.75);
+  outline-offset: 3px;
+}
+
+.btnSecondary {
+  border: 1px solid rgba(34, 197, 94, 0.45);
+  background: linear-gradient(180deg, rgba(34, 197, 94, 0.95), rgba(34, 197, 94, 0.82));
+  box-shadow: 0 10px 24px rgba(34, 197, 94, 0.18);
+}
+
+.content {
+  margin-top: 18px;
+}
+
+.panel {
+  border: 1px solid var(--border);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.02));
+  border-radius: 16px;
+  padding: 16px;
+  box-shadow: var(--shadow);
+}
+
+.panelHeader {
+  text-align: center;
+  padding: 10px 10px 6px;
+}
+
+.title {
+  margin: 0;
+  font-size: 34px;
+  letter-spacing: 0.03em;
+}
+
+.subtitle {
+  margin: 8px 0 0;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.gameWrap {
+  margin-top: 16px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+  align-items: start;
+}
+
+.game {
+  position: relative;
+  display: grid;
+  place-items: center;
+}
+
+.grid {
+  --grid-size: 21;
+  display: grid;
+  grid-template-columns: repeat(var(--grid-size), var(--cell-size));
+  grid-template-rows: repeat(var(--grid-size), var(--cell-size));
+  gap: var(--cell-gap);
+  padding: 12px;
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  background:
+    radial-gradient(900px 500px at 20% 0%, rgba(249, 115, 22, 0.14), transparent 52%),
+    radial-gradient(900px 500px at 80% 0%, rgba(34, 197, 94, 0.12), transparent 52%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.22), 0 18px 50px rgba(0, 0, 0, 0.42);
+}
+
+.cell {
+  width: var(--cell-size);
+  height: var(--cell-size);
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.cellSnake {
+  background: rgba(34, 197, 94, 0.88);
+  box-shadow: 0 0 0 1px rgba(17, 24, 39, 0.35), 0 0 16px rgba(34, 197, 94, 0.16);
+}
+
+.cellHead {
+  background: rgba(34, 197, 94, 1);
+  box-shadow: 0 0 0 1px rgba(17, 24, 39, 0.42), 0 0 22px rgba(34, 197, 94, 0.22);
+}
+
+.cellFood {
+  background: rgba(249, 115, 22, 0.96);
+  box-shadow: 0 0 0 1px rgba(17, 24, 39, 0.35), 0 0 22px rgba(249, 115, 22, 0.22);
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 16px;
+  background: rgba(0, 0, 0, 0.62);
+  border-radius: 16px;
+}
+
+.overlayCard {
+  width: min(360px, 100%);
+  border: 1px solid rgba(239, 68, 68, 0.55);
+  border-radius: 16px;
+  background: linear-gradient(180deg, rgba(17, 24, 39, 0.96), rgba(17, 24, 39, 0.86));
+  padding: 16px;
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.55);
+  text-align: center;
+}
+
+.overlayTitle {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New",
+    monospace;
+  font-weight: 900;
+  letter-spacing: 0.16em;
+  color: rgba(255, 255, 255, 0.95);
+}
+
+.overlayText {
+  margin-top: 10px;
+  color: rgba(255, 255, 255, 0.86);
+}
+
+.overlayButtons {
+  margin-top: 14px;
+  display: flex;
+  justify-content: center;
+}
+
+.overlayHint {
+  margin-top: 10px;
+  color: rgba(255, 255, 255, 0.68);
+  font-size: 12px;
+}
+
+.controls {
+  border: 1px solid var(--border);
+  background: var(--surface);
+  border-radius: 16px;
+  padding: 14px;
+}
+
+.controlsTitle {
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.86);
+}
+
+.controlsList {
+  margin: 10px 0 0;
+  padding-left: 18px;
+  color: var(--muted);
+  line-height: 1.6;
+  font-size: 14px;
+}
+
+kbd {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New",
+    monospace;
+  font-size: 12px;
+  padding: 2px 6px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.06);
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.touchPad {
+  margin-top: 14px;
+  display: grid;
+  gap: 10px;
+  justify-items: center;
+}
+
+.padRow {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.padBtn {
+  width: 56px;
+  height: 44px;
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  background: var(--surface-2);
+  color: rgba(255, 255, 255, 0.92);
+  cursor: pointer;
+  font-weight: 900;
+  transition: transform 120ms ease, filter 120ms ease;
+}
+
+.padBtn:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.05);
+}
+
+.padBtn:active {
+  transform: translateY(0px);
+  filter: brightness(0.98);
+}
+
+.padBtn:focus-visible {
+  outline: 3px solid rgba(249, 115, 22, 0.65);
+  outline-offset: 3px;
+}
+
+.padCenter {
+  width: 62px;
+}
+
+.finePrint {
+  margin: 12px 0 0;
+  color: rgba(255, 255, 255, 0.62);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.footer {
+  margin-top: 14px;
+  display: flex;
+  justify-content: center;
+}
+
+.footerText {
+  color: rgba(255, 255, 255, 0.58);
+  font-size: 12px;
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+
+/* Responsive adjustments */
+@media (min-width: 900px) {
+  :root {
+    --cell-size: 20px;
   }
-  to {
-    transform: rotate(360deg);
+
+  .topbar {
+    grid-template-columns: 1fr 1.4fr 0.9fr;
+    align-items: center;
+  }
+
+  .actions {
+    justify-content: flex-end;
+  }
+
+  .gameWrap {
+    grid-template-columns: 1fr 360px;
+    gap: 16px;
+  }
+
+  .panelHeader {
+    padding-bottom: 10px;
   }
 }
 
-/* Responsive design for mobile */
-@media (max-width: 768px) {
-  .theme-toggle {
-    top: 10px;
-    right: 10px;
-    padding: 8px 16px;
-    font-size: 12px;
+@media (max-width: 420px) {
+  :root {
+    --cell-size: 15px;
+    --cell-gap: 2px;
+  }
+
+  .title {
+    font-size: 28px;
+  }
+
+  .statValue {
+    font-size: 16px;
+  }
+
+  .padBtn {
+    width: 54px;
   }
 }
